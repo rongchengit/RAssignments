@@ -90,29 +90,23 @@ waterCostTsibble <- PBS %>%
 #reformating back to tsibble
 waterCostTsibble <- as_tsibble(waterCostTsibble, index = Month)
 
-# Auto plot
 waterCostPlot <- autoplot(waterCostTsibble, Cost) +
   labs(title = " water cost from PBS")
 #print(waterCostPlot)
 
-# Auto plot
 waterCostPlot <- autoplot(waterCostTsibble, Cost) +
   labs(title = " water cost from PBS")
 #print(waterCostPlot)
 
-# Seasonal plot
 waterCostSeasonPlot <- gg_season(waterCostTsibble, Cost)
 #print(waterCostSeasonPlot)
 
-# Subseries plot
 waterCostSeriesPlot <- gg_subseries(waterCostTsibble, Cost)
 #print(waterCostSeriesPlot)
 
-# Lag plot
 waterCostLagPlot <- gg_lag(waterCostTsibble, Cost)
 #print(waterCostLagPlot)
 
-# ACF plot
 waterCostAcfPlot <- ACF(waterCostTsibble, Cost)
 #print(waterCostAcfPlot)
 #----------------------------------------------------------------
