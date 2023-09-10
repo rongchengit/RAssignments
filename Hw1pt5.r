@@ -6,20 +6,31 @@ library(ggplot2)
 library(fabletools)
 library(feasts)
 
-totalPrivateEmployed <- us_employment %>% select(Month, `Total Private`)
+#print(?us_employment)
 
-# Basic plot
-autoplot(totalPrivateEmployed, `Total Private`) +
+# Filter data for "Total Private"
+totalPrivateEmployed <- us_employment %>% 
+  filter(Title == "Total Private") %>%
+  select(Month, Employed)
+
+# Auto plot
+employPlot <- autoplot(totalPrivateEmployed, Employed) +
   labs(title = "Total Private Employed from us_employment")
 
 # Seasonal plot
-gg_season(totalPrivateEmployed, `Total Private`)
+seasonPlot <- gg_season(totalPrivateEmployed, `Employed`)
 
 # Subseries plot
-gg_subseries(totalPrivateEmployed, `Total Private`)
+seriesPlot <- gg_subseries(totalPrivateEmployed, `Employed`)
 
 # Lag plot
-gg_lag(totalPrivateEmployed, `Total Private`)
+lagPlot <- gg_lag(totalPrivateEmployed, `Employed`)
 
 # ACF plot
-ACF(totalPrivateEmployed, `Total Private`)
+acfPlot <- ACF(totalPrivateEmployed, `Employed`)
+
+#print(employPlot)
+#print(seasonPlot)
+#print(seriesPlot)
+#print(lagPlot)
+#print(acfPlot)
