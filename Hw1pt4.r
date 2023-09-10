@@ -21,7 +21,7 @@ maxTripAverage <- tourism %>%
   arrange(desc(avg_trips)) %>% #arrange from highest to lowest
   slice(1)
 
-#print(maxTripAverage)
+print(maxTripAverage)
 
 tripByState <- tourism %>%
   group_by(State) %>%

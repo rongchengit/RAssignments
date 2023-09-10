@@ -20,7 +20,7 @@ library(fabletools)
 # print(?aus_production) #uses Quarter
 # print(?pelt) #uses Year
 # print(?vic_elec) #uses Time
-print(?gafa_stock) #uses Date
+# print(?gafa_stock) #uses Date
 
 #shows the data on the terminal which i prefer
 # print(head(aus_production))
@@ -32,7 +32,7 @@ print(?gafa_stock) #uses Date
 # print(bricksTsibble <- aus_production %>% select(Quarter, Bricks))
 # print(lynxTsibble <- pelt %>% select(Year, Lynx))
 # print(demandTsibble <- vic_elec %>% select(Time, Demand))
-print(closeTsibble <- gafa_stock %>% select(Date, Close))
+# print(closeTsibble <- gafa_stock %>% select(Date, Close))
 
 
 # autoplotting them
@@ -52,10 +52,10 @@ closePlot <- autoplot(closeTsibble, Close) +
 # print(demandPlot)
 # print(closePlot)
 
-#2.1
+#2.2
 # needed to find the 4 stocks
 uniqueStocks <- unique(gafa_stock$Symbol)
-# print(uniqueStocks)
+print(uniqueStocks)
 
 #Symbol is used to find the stocks
 #groupby is used to put all the stocks in their group
@@ -67,5 +67,5 @@ peakClosingPrices <- gafa_stock %>%
   filter(Close == max(Close)) %>%
   ungroup()
 
-# print(peakClosingPrices)
+print(peakClosingPrices)
 

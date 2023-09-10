@@ -13,7 +13,6 @@ gasTsibble <- us_total %>% as_tsibble(index = year, key = state)
 
 print(gasTsibble)
 
-
 #
 newEnglandStates <- c("Maine", "Vermont", "New Hampshire", "Massachusetts", "Connecticut", "Rhode Island")
 

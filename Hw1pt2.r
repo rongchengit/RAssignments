@@ -19,8 +19,8 @@ mytimeseries <- tute1 |>
 timePlot <- mytimeseries |>
                 pivot_longer(-Quarter) |>
                 ggplot(aes(x = Quarter, y = value, colour = name)) +
-                geom_line() +
-                facet_grid(name ~ ., scales = "free_y")
+                geom_line() 
+                # facet_grid(name ~ ., scales = "free_y")
 
 # the facetgrid split the columns into 3 individual columns
 print(timePlot)
