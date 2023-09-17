@@ -10,22 +10,21 @@ library(fabletools)
 #glimpse(global_economy)
 
 #calculate GDP per capita
+gdpPerCapita <- global_economy %>%
+  mutate(GDP_per_capita = GDP / Population) %>%
+  select(Country, Year, GDP_per_capita)
 
-# gdpPerCapita <- global_economy %>%
-#   mutate(GDP_per_capita = GDP / Population) %>%
-#   select(Country, Year, GDP_per_capita)
+#plot
+gdpPlot <- ggplot(gdpPerCapita, aes(x = Year, y = GDP_per_capita, color = Country)) +
+  geom_line() +
+  labs(
+    title = "GDP per Capita Over Time",
+    x = "Year",
+    y = "GDP per Capita"
+  ) +
+  theme(legend.position = "none")  #easier to read
 
-# # Plot GDP per capita for each country over time
-# gdpPlot <- ggplot(gdpPerCapita, aes(x = Year, y = GDP_per_capita, color = Country)) +
-#   geom_line() +
-#   labs(
-#     title = "GDP per Capita Over Time",
-#     x = "Year",
-#     y = "GDP per Capita"
-#   ) +
-#   theme(legend.position = "none")  #easier to read
-
-# print(gdpPlot)
+#print(gdpPlot)
 
 #finding the top country
 latestYear <- max(gdpPerCapita$Year)

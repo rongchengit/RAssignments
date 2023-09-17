@@ -21,16 +21,16 @@ turnoverPlot <- ggplot(myseries, aes(x = Month, y = Turnover)) +
   geom_line() + 
   labs(title = "Selected Series Turnover from aus_retail")
 
-print(turnoverPlot)
+#print(turnoverPlot)
 
-# Convert the series into a ts object
+#convert to ts object
 turnoverTs <- ts(myseries$Turnover, start=c(year(min(myseries$Month)), month(min(myseries$Month))), frequency=12)
 
-# Apply the X-11 decomposition
+#apply x-11 decomposition
 decomposedTurnover <- seas(turnoverTs)
 
-# Print the decomposed object
+#print the decomposed object
 print(decomposedTurnover)
 
-# Plot the decomposed series
+#plot the decomposed series
 plot(decomposedTurnover)

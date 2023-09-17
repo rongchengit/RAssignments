@@ -27,17 +27,17 @@ library(forecast)
 #   filter(State == "Victoria" & Animal == "Bulls, bullocks and steers") %>%
 #   select(Month, Count)
 
-# # vicSlaughterPlot <- ggplot(vicSlaughter, aes(x = Month, y = Count)) +
-# #   geom_line() +
-# #   labs(title = "Slaughter of Victorian 'Bulls, bullocks and steers'")
+# vicSlaughterPlot <- ggplot(vicSlaughter, aes(x = Month, y = Count)) +
+#   geom_line() +
+#   labs(title = "Slaughter of Victorian 'Bulls, bullocks and steers'")
 
-# # print(vicSlaughterPlot)
+# print(vicSlaughterPlot)
 
 # vicTs <- ts(vicSlaughter$Count, frequency = 12)  #12 is for months
 
 # #decompose the time series
 # decomp <- decompose(vicTs)
-# plot(decomp)
+# #plot(decomp)
 
 #----------------------------------------------------------------
 
@@ -50,10 +50,10 @@ library(forecast)
 #        y = "Electricity Demand")
 
 # print(vicElecPlot)
-#i tried to find a seasonal transformation for electric but it was difficult to read
-#im sure if i spend more time on it i could have nailed it, it was blurry and too much fluxation
-#and i feel it is already consistent 
-#maybe i'll try box-cox since it is somewhat stable
+# #i tried to find a seasonal transformation for electric but it was difficult to read
+# #im sure if i spend more time on it i could have nailed it, it was blurry and too much fluxation
+# #and i feel it is already consistent 
+# #maybe i'll try box-cox since it is somewhat stable
 #----------------------------------------------------------------
 
 # glimpse(aus_production)
@@ -66,7 +66,6 @@ library(forecast)
 
 # print(gasProductionPlot)
 
-# # #----------------------------------------------------------------
 # ausProductionLog <- aus_production %>%
 #   mutate(LogGas = log(Gas))
 
@@ -79,9 +78,10 @@ library(forecast)
 
 # print(logPlot)
 
-# #we can see the rate in which the gas production is changing exponentially
+# # #we can see the rate in which the gas production is changing exponentially
 
 #----------------------------------------------------------------
+#3.3
 # glimpse(canadian_gas)
 
 # canadianGasPlot <- ggplot(canadian_gas, aes(x = Month, y = Volume)) +
@@ -103,10 +103,10 @@ library(forecast)
 # ausRetailTransformed <- BoxCox(aus_retail$Turnover, lambda = bestLambda)
 
 # print(paste("box cox determinator:", bestLambda))
-#really close to 0 so we use a natural log just like aus_production, but my graph looked different so i got rid of it
-#i used a subset as well, by i decided against it
+# # really close to 0 so we use a natural log just like aus_production, but my graph looked different so i got rid of it
+# # i used a subset as well, by i decided against it
 
-#3.5
+# #3.5
 # glimpse(ansett)
 # glimpse(pedestrian)
 
@@ -114,20 +114,20 @@ lambdaTobacco <- BoxCox.lambda(aus_production$Tobacco)
 print(paste("Lambda for Tobacco:", lambdaTobacco))
 #0.71, suggesting we use a power transformation close to the square root.
 
-# Filtering the dataset for Melbourne-Sydney and Economy class 
+#filter for Melbourne-Sydney and Economy class 
 subsetAnsett <- ansett[ansett$Airports == "MEL-SYD" & ansett$Class == "Economy" & ansett$Passengers > 0, ]
 #because there was negative numbers in it, so we couldnt use that for box-cox
-# Now get the lambda value for the filtered data
+#lambda the filter data
 lambdaAnsett <- BoxCox.lambda(subsetAnsett$Passengers)
 print(paste("Lambda for Ansett Economy Passengers between Melbourne and Sydney:", lambdaAnsett))
 #Lambda is near 2. This means we should square the values.
 
-# Filter the dataset for Southern Cross Station and ensure counts are positive
+#fitler for Southern Cross Station and ensure counts are positive
 subsetPedestrian <- pedestrian[pedestrian$Sensor == "Southern Cross Station" & pedestrian$Count > 0, ]
 
-# Now get the lambda value for the filtered data
+#lambda filter
 lambdaPedestrian <- BoxCox.lambda(subsetPedestrian$Count)
 print(paste("Lambda for Pedestrian Counts at Southern Cross Station:", lambdaPedestrian))
 #Lambda is about 0.06, indicating a logarithmic transformation would be best.
 
-#----------------------------------------------------------------
+# #----------------------------------------------------------------
