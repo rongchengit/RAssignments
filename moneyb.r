@@ -14,6 +14,12 @@ moneyballEval <- read.csv("/Users/rongchen/Desktop/Data Mining Homework 1/moneyb
 moneyballTraining <- read.csv("/Users/rongchen/Desktop/Data Mining Homework 1/moneyballTraining.csv")
 
 #-Data Preparation-------------------------------------------------------------
+#checking for NA data
+numNAsEval <- sum(is.na(moneyballEval))
+# print(paste("Number of NAs in the evaluation dataset:", numNAsEval))
+
+numNAsTraining <- sum(is.na(moneyballTraining))
+# print(paste("Number of NAs in the training dataset:", numNAsTraining))
 #-Data Cleaning----------------------------------------------------------------
 
 #opted to use this over removing NA or blanks to avoid losing important information
@@ -33,18 +39,18 @@ moneyballTraining <- moneyballTraining %>%
 # print("Variables in the dataset:")
 # print(colnames(moneyballTraining))
 
-#barchart for mean, median, standard deviation of selected variables
-#i created subsets so it can be done on the barchart
-selectedVars <- c("TARGET_WINS", "TEAM_BATTING_H", "TEAM_BATTING_2B", "TEAM_BATTING_3B", 
-                  "TEAM_BATTING_HR", "TEAM_BATTING_BB", "TEAM_BATTING_SO", "TEAM_BASERUN_SB", 
-                  "TEAM_BASERUN_CS", "TEAM_BATTING_HBP", "TEAM_PITCHING_H", "TEAM_PITCHING_HR", 
-                  "TEAM_PITCHING_BB", "TEAM_PITCHING_SO", "TEAM_FIELDING_E", "TEAM_FIELDING_DP")
+# #barchart for mean, median, standard deviation of selected variables
+# #i created subsets so it can be done on the barchart
+# selectedVars <- c("TARGET_WINS", "TEAM_BATTING_H", "TEAM_BATTING_2B", "TEAM_BATTING_3B", 
+#                   "TEAM_BATTING_HR", "TEAM_BATTING_BB", "TEAM_BATTING_SO", "TEAM_BASERUN_SB", 
+#                   "TEAM_BASERUN_CS", "TEAM_BATTING_HBP", "TEAM_PITCHING_H", "TEAM_PITCHING_HR", 
+#                   "TEAM_PITCHING_BB", "TEAM_PITCHING_SO", "TEAM_FIELDING_E", "TEAM_FIELDING_DP")
 
-subMeans <- sapply(moneyballTraining[selectedVars], mean)
-subSds <- sapply(moneyballTraining[selectedVars], sd)
-subMedians <- sapply(moneyballTraining[selectedVars], median)
+# subMeans <- sapply(moneyballTraining[selectedVars], mean)
+# subSds <- sapply(moneyballTraining[selectedVars], sd)
+# subMedians <- sapply(moneyballTraining[selectedVars], median)
 
-#barchart
+# #barchart
 # barChart <- barplot(rbind(subMeans, subSds, subMedians), beside=TRUE, 
 #                     col=c("blue", "red", "green"), las=2, 
 #                     ylim=c(0, max(c(subMeans, subSds, subMedians)) + 10), 
@@ -66,8 +72,8 @@ moneyballTrainingLog <- moneyballTraining %>%
 #model using all available statistics
 #31.92% of the variation in wins for the r-squared
 modelAllVars <- lm(TARGET_WINS ~ . - INDEX, data = moneyballTraining)
-print("model 1")
-print(summary(modelAllVars))
+# print("model 1")
+# print(summary(modelAllVars))
 
 # Model using selected variables because these 4 are probably most important in baseball when it comes to winning aka scoring
 # TEAM_BATTING_H (Team Batting Hits) - teams that hit well might score more runs
@@ -76,16 +82,16 @@ print(summary(modelAllVars))
 # TEAM_PITCHING_SO (Team Pitching Strikeouts) - more strikeouts by a pitcher mean fewer scoring opportunities for the opposing team
 # 22.97% of the wins for the r-squared
 modelSelectedVars <- lm(TARGET_WINS ~ TEAM_BATTING_H + TEAM_BATTING_HR + TEAM_PITCHING_H + TEAM_PITCHING_SO, data = moneyballTraining)
-print("model 2")
-print(summary(modelSelectedVars))
+# print("model 2")
+# print(summary(modelSelectedVars))
 
 #model using logs data
 #22.43% of the wins for the r-squared
 #transformation also captures the idea that the relationship between hits and wins might be non linear
 #the variables chosen focuseson specific predictors that might be more influential or interpretable
 modelTransformedVars <- lm(TARGET_WINS ~ log(TEAM_BATTING_H + 1) + sqrt(TEAM_BATTING_HR) + TEAM_PITCHING_H + TEAM_FIELDING_E, data = moneyballTrainingLog)
-print("model 3")
-print(summary(modelTransformedVars))
+# print("model 3")
+# print(summary(modelTransformedVars))
 
 #-Predictions--------------------------------
 #for finding the highest predictive accuracy for simple models like the ones I created
@@ -103,6 +109,7 @@ print(summary(modelTransformedVars))
 #as well, but it came out more complex than I had hope I got rid of them
 
 #-data cleaning for evaluation--------------------------------
+#cleaned up data for evaluation so its useable
 moneyballEval <- moneyballEval %>%
   mutate_all(function(x) ifelse(is.na(x), mean(x, na.rm = TRUE), x))
 
