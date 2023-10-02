@@ -6,17 +6,20 @@ library(corrplot)
 library(GGally)
 library(caret)
 
-data(Glass) # load data set
-str(Glass) # view data set structure
+#load data set
+data(Glass) 
+#load structure
+str(Glass) 
 
+#visualize distributions
 histPlot <- Glass %>%
-  gather(key = "predictor", value = "value", -Type) %>%  # Exclude the 'Type' column
+  gather(key = "predictor", value = "value", -Type) %>%#not including type column
   ggplot(aes(value)) +
   geom_histogram(bins = 30, fill = "dodgerblue") +
   facet_wrap(~ predictor, scales = "free") +
   labs(title = "Histogram of Predictor Variables")
   
-# print(histPlot)
+print(histPlot)
 
 scatterMatrix <- Glass %>%
   purrr::keep(is.numeric) %>%
